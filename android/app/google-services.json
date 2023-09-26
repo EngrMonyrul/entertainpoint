@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1032863685159",
+    "project_id": "livetvapp-8984d",
+    "storage_bucket": "livetvapp-8984d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032863685159:android:b4335059ca38e59e7c8c02",
+        "android_client_info": {
+          "package_name": "com.monirul.entertainpoint"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7FzR_XoGLuvTzbvOyX_kTTOxIOtCExJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
