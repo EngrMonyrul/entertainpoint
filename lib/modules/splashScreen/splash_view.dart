@@ -22,9 +22,11 @@ class _SplashViewState extends State<SplashView> {
     if (await canLaunchUrl(Uri.parse('http://bdiptv.net/'))) {
       appResponse.setBdIP(true);
     }
+
     if (await canLaunchUrl(Uri.parse('http://circleftp.net/'))) {
       appResponse.setCircleFtp(true);
     }
+
     if (await canLaunchUrl(Uri.parse('http://172.16.50.14/'))) {
       appResponse.setFtp(true);
     }
@@ -32,6 +34,9 @@ class _SplashViewState extends State<SplashView> {
     database.getUpdate();
     database.getYtVideos();
     database.getStreamUrl();
+    database.getCircleFtpVideo();
+    database.getFtpVideo();
+    database.getTvShows();
 
     Future.delayed(const Duration(seconds: 1), () {
       Navigator.push(context, MaterialPageRoute(builder: (context) => const ControllerScreenView()));

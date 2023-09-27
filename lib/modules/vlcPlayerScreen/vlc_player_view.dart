@@ -19,15 +19,22 @@ class _VlcVideoPlayerScreenState extends State<VlcVideoPlayerScreen> {
   String currentPositionString = '';
   String totalLengthString = '';
   bool showController = true;
+  bool videoLoaded = false;
 
   setController() {
-    controller = VlcPlayerController.network(
-      widget.videoLink,
-      hwAcc: HwAcc.auto,
-      options: VlcPlayerOptions(),
-    );
+    if (widget.videoLink.isNotEmpty) {
+      controller = VlcPlayerController.network(
+        widget.videoLink,
+        hwAcc: HwAcc.auto,
+        options: VlcPlayerOptions(),
+      );
 
-    setCurrentPosition();
+      setState(() {
+        videoLoaded = true;
+      });
+
+      setCurrentPosition();
+    }
   }
 
   setCurrentPosition() {
@@ -63,104 +70,106 @@ class _VlcVideoPlayerScreenState extends State<VlcVideoPlayerScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            AspectRatio(
-              aspectRatio: controller.value.aspectRatio,
-              child: VlcPlayer(
-                controller: controller,
-                aspectRatio: controller.value.aspectRatio,
-                placeholder: const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: AspectRatio(
-                aspectRatio: controller.value.aspectRatio,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            showController = !showController;
-                          });
-                        },
-                        child: Icon(
-                          CupertinoIcons.game_controller,
-                          color: Colors.white.withOpacity(0.5),
-                        ),
+        child: videoLoaded
+            ? Stack(
+                alignment: Alignment.center,
+                children: [
+                  AspectRatio(
+                    aspectRatio: controller.value.aspectRatio,
+                    child: VlcPlayer(
+                      controller: controller,
+                      aspectRatio: controller.value.aspectRatio,
+                      placeholder: const Center(
+                        child: CircularProgressIndicator(),
                       ),
                     ),
-                    if (showController)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: AspectRatio(
+                      aspectRatio: controller.value.aspectRatio,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            currentPositionString,
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          buildVideoButton(CupertinoIcons.backward_end, () {
-                            Duration currentPosition = controller.value.position;
-                            Duration newPosition = currentPosition - const Duration(seconds: 10);
-                            controller.seekTo(newPosition);
-                          }),
-                          buildVideoButton(
-                              controller.value.isPlaying ? CupertinoIcons.play_arrow : CupertinoIcons.pause, () {
-                            if (controller.value.isPlaying) {
-                              controller.pause();
-                            } else {
-                              controller.play();
-                            }
-                          }),
-                          buildVideoButton(CupertinoIcons.forward_end, () {
-                            Duration currentPosition = controller.value.position;
-                            Duration newPosition = currentPosition + const Duration(seconds: 10);
-                            controller.seekTo(newPosition);
-                          }),
-                          Text(
-                            totalLengthString,
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    if (showController)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: Slider(
-                              value: controller.value.position.inSeconds.toDouble(),
-                              min: 0.0,
-                              max: controller.value.duration.inSeconds.toDouble(),
-                              onChanged: (value) {
-                                controller.seekTo(Duration(seconds: value.toInt()));
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  showController = !showController;
+                                });
                               },
+                              child: Icon(
+                                CupertinoIcons.game_controller,
+                                color: Colors.white.withOpacity(0.5),
+                              ),
                             ),
                           ),
-                          buildVideoButton(Icons.open_in_full_sharp, () {
-                            SystemChrome.setPreferredOrientations(
-                                [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
-                          }),
+                          if (showController)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  currentPositionString,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                buildVideoButton(CupertinoIcons.backward_end, () {
+                                  Duration currentPosition = controller.value.position;
+                                  Duration newPosition = currentPosition - const Duration(seconds: 10);
+                                  controller.seekTo(newPosition);
+                                }),
+                                buildVideoButton(
+                                    controller.value.isPlaying ? CupertinoIcons.play_arrow : CupertinoIcons.pause, () {
+                                  if (controller.value.isPlaying) {
+                                    controller.pause();
+                                  } else {
+                                    controller.play();
+                                  }
+                                }),
+                                buildVideoButton(CupertinoIcons.forward_end, () {
+                                  Duration currentPosition = controller.value.position;
+                                  Duration newPosition = currentPosition + const Duration(seconds: 10);
+                                  controller.seekTo(newPosition);
+                                }),
+                                Text(
+                                  totalLengthString,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          if (showController)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height * 0.05,
+                                  width: MediaQuery.of(context).size.width * 0.8,
+                                  child: Slider(
+                                    value: controller.value.position.inSeconds.toDouble(),
+                                    min: 0.0,
+                                    max: controller.value.duration.inSeconds.toDouble(),
+                                    onChanged: (value) {
+                                      controller.seekTo(Duration(seconds: value.toInt()));
+                                    },
+                                  ),
+                                ),
+                                buildVideoButton(Icons.open_in_full_sharp, () {
+                                  SystemChrome.setPreferredOrientations(
+                                      [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+                                }),
+                              ],
+                            ),
                         ],
                       ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
+                    ),
+                  )
+                ],
+              )
+            : const CircularProgressIndicator(),
       ),
     );
   }

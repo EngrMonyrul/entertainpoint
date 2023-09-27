@@ -41,25 +41,32 @@ class _SplashScreenViewState extends State<SplashScreenView> {
             ),
           ),
           const Spacer(),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
-                const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-              ),
-            ),
-            onPressed: () {
-              print(appUpdate['version']);
-              if(appResponseProvider.updateVersion == appUpdate['version']){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const SplashView()));
-              } else {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const UpdateScreenView()));
-              }
-            },
-            child: const Text('Let\'s Go'),
-          ),
+          FutureBuilder(
+              future: database.getUpdate(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (appResponseProvider.updateVersion == appUpdate['version']) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SplashView()));
+                      } else {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const UpdateScreenView()));
+                      }
+                    },
+                    child: const Text('Let\'s Go'),
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              }),
           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
         ],
       ),

@@ -38,28 +38,30 @@ class _ShortsVideoScreenViewState extends State<ShortsVideoScreenView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: MediaQuery.of(context).padding.top),
-            Text(
-              widget.type,
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            if (showWebView)
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.9,
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: WebViewWidget(
-                    controller: webViewController,
-                  ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).padding.top),
+              Text(
+                widget.type,
+                style: const TextStyle(
+                  fontSize: 20,
                 ),
               ),
-          ],
+              if (showWebView)
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: WebViewWidget(
+                      controller: webViewController,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

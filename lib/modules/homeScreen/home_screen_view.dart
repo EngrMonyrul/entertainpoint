@@ -4,8 +4,6 @@ import 'package:entertainpoint/modules/homeScreen/widgets/list_view_widget.dart'
 import 'package:entertainpoint/modules/homeScreen/widgets/title_tag_widget.dart';
 import 'package:entertainpoint/utils/constant/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import '../vlcPlayerScreen/vlc_player_view.dart';
 
 class HomeScreenView extends StatefulWidget {

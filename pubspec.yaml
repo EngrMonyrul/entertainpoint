@@ -48,6 +48,15 @@ dependencies:
   webview_flutter: ^4.2.4
   flutter_vlc_player: ^7.3.1
   share_plus: ^7.1.0
+  http: ^1.1.0
+  path_provider: ^2.1.1
+  dio: ^5.3.3
+  permission_handler: ^11.0.0
+  intl: ^0.18.1
+  device_info_plus: ^9.0.3
+  youtube_explode_dart: ^2.0.2
+  ffmpeg_kit_flutter: ^6.0.3
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +68,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: "assets/icons/Entertainment-and-Media.png"
+  min_sdk_android: 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

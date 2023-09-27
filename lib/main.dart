@@ -1,3 +1,5 @@
+import 'package:entertainpoint/modules/downloadScreen/download_screen_view.dart';
+import 'package:entertainpoint/modules/downloadScreen/provider/download_screen_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AppResponseProvider()),
         ChangeNotifierProvider(create: (_) => ControllerScreenProvider()),
+        ChangeNotifierProvider(create: (_) => DownloadScreenProvider()),
       ],
       child: Builder(builder: (context) {
         return MaterialApp(

@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../common/provider/app_response_provider.dart';
 import '../../utils/constant/constant.dart';
+import '../movieScreen/movie_screen_view.dart';
 
 class ControllerScreenView extends StatefulWidget {
   const ControllerScreenView({super.key});
@@ -32,7 +33,7 @@ class _ControllerScreenViewState extends State<ControllerScreenView> {
     return Scaffold(
       appBar: buildAppBar(context),
       bottomNavigationBar: buildCotrollerNavbar(context, controllerProvider, appResponseProvider),
-      body: HomeScreenView(),
+      body: allPages[controllerProvider.navbarIndex],
     );
   }
 }
